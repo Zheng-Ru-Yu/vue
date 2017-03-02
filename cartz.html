@@ -78,7 +78,7 @@
 
     		},
     		methods:{
-    			addCart:function(product){
+    			addCart:function(product){//加购物车
     				var index = this.cartList.indexOf(product);
     				if( index == -1){
                    		this.cartList.push(product);
@@ -91,25 +91,25 @@
 	                }
 	                this.countTotalMoney();
 	            },
-	            delectProduct:function(product){
+	            delectProduct:function(product){//删除
 	                this.productList.splice(this.productList.indexOf(product),1);
 	                this.cartList.splice(this.cartList.indexOf(product),1);
 	                // console.log(this.cartList);
 	                this.countTotalMoney();
 
 	            },
-	            max:function(product){
+	            max:function(product){//+
                     product.productQuentity++;
                     this.countTotalMoney();
 
 	            },
-	            min:function(product){
+	            min:function(product){//-
 	            	if (product.productQuentity>=1) {
 	            		product.productQuentity--;
 	            		this.countTotalMoney();
 	            	}
 	            },
-    			countTotalMoney:function(){
+    			countTotalMoney:function(){//计算总金额
     				var _this = this;
     				 _this.totalMoney = 0;
     				 this.cartList.forEach(function(product) {
