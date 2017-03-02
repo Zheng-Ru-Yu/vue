@@ -31,22 +31,21 @@
 		</thead>
 		<tbody>
 			<tr v-for="product in productList">
-           		<td><input type="checkbox"></td>
+           		<td><input type="checkbox"  @click="addCart(product)"></td>
 				<td><img :src="product.productImg" alt=""></td>
-				<td>{{product.productName}}</td>
+				<td v-text="product.productName"></td>
 				<td></td>
-				
-				<td>{{product.productPrice}}</td>
+
+				<td  v-text="product.productPrice"></td>
 				<td>
-	                <button>-</button>
+	                <button @click="min(product)">-</button>
 	                <input type="text" v-bind:value="product.productQuentity" >
-	                <button>+</button>
+	                <button @click="max(product)">+</button>
             	</td>
-            	<td>
-            		 {{product.productPrice * product.productQuentity}}
+            	<td  v-text="product.productPrice * product.productQuentity">
             	</td>
 				<td>
-                	<a href="#">删除</a>
+                	<a href="javascript:;" @click="delectProduct(product)">删除</a>
             	</td>
 			</tr>
 		</tbody>
@@ -55,7 +54,7 @@
                 <input type="checkbox"> 全选
             </td>
             <td>
-                总计：
+                总计：{{totalMoney}}
             </td>
             <td>
                 <button>结账</button>
@@ -70,13 +69,58 @@
     	var vm = new Vue({
     		el:'#tab',
     		data:{
-    			productList: []
+    			productList: [],
+    			cartList:[],
+    			totalMoney:0,
 
     		},
     		computed:{
 
     		},
     		methods:{
+    			addCart:function(product){
+    				var index = this.cartList.indexOf(product);
+    				if( index == -1){
+                   		this.cartList.push(product);
+	            	 console.log(this.cartList);
+
+
+	                }else{
+	                    this.cartList.splice(index,1);
+
+	                }
+	                this.countTotalMoney();
+	            },
+	            delectProduct:function(product){
+	                this.productList.splice(this.productList.indexOf(product),1);
+	                this.cartList.splice(this.cartList.indexOf(product),1);
+	                // console.log(this.cartList);
+	                this.countTotalMoney();
+
+	            },
+	            max:function(product){
+                    product.productQuentity++;
+                    this.countTotalMoney();
+
+	            },
+	            min:function(product){
+	            	if (product.productQuentity>=1) {
+	            		product.productQuentity--;
+	            		this.countTotalMoney();
+	            	}
+	            },
+    			countTotalMoney:function(){
+    				var _this = this;
+    				 _this.totalMoney = 0;
+    				 this.cartList.forEach(function(product) {
+                    _this.totalMoney += product.productPrice*product.productQuentity;
+                });
+
+    			}
+
+
+
+
     		},
 			mounted:function(){
 				var _this = this;
