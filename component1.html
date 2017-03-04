@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="div1">
+        <mytag parent-msg="hello"></mytag><!-- 父往子传值 -->
+    </div>
+    <script src="vue.min.js"></script>
+    <script>
+        Vue.component('mytag', {
+            template: '<div>{{parentMsg}}</div>',
+            props: ['parentMsg', 'parentMsg2'],
+            methods: {
+            }
+        });
+        new Vue({
+            el: '#div1',
+            data: {
+            },
+            methods: {
+            }
+        });
+    </script>
+</body>
+</html>
