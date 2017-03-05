@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="div1">
+        <mytag :parent-msg2="myMsg" v-on:receive="receiveMsg"></mytag><!-- on:监听 -->
+    </div>
+    <script src="vue.min.js"></script>
+    <script>
+        Vue.component('mytag', {
+            template: '<div>{{parentMsg2}}<button @click="childClick">child click</button></div>',
+            props: ['parentMsg2'],
+            methods: {
+                childClick: function () {
+                    this.$emit('receive', 'hello world2222');//触发
+                }
+            }
+        });
+
+        new Vue({
+            el: '#div1',
+            data: {
+              myMsg: ''
+            },
+            methods: {
+                receiveMsg: function (childMsg) {
+                    this.myMsg = childMsg;
+                }
+            }
+        });
+
+
+
+    </script>
+</body>
+</html>
